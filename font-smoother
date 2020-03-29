@@ -1,0 +1,36 @@
+#! /usr/bin/env sh
+
+
+disableFontSmoothing() {
+  defaults -currentHost delete -globalDomain AppleFontSmoothing
+  defaults write -g CGFontRenderingFontSmoothingDisabled -bool YES
+  echo "[✓] Font Smooth Disabled"
+}
+
+enableFontSmoothing() {
+  defaults -currentHost write -globalDomain AppleFontSmoothing -int 3
+  defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO
+  echo "[✓] Font Smooth Enabled"
+}
+
+help() {
+  usage="$(basename "$0") [-h] -- Enable/Disable font smothing for non-retina displays
+
+    enable - enables the font smoothing
+    disable - disables the font smoothing"
+
+    echo "$usage"
+}
+
+
+case "$1" in 
+  enable) enableFontSmoothing
+    ;;
+  disable) disableFontSmoothing
+    ;;
+  *) help
+    ;;
+esac
+
+exit 0 
+
